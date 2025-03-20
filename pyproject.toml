@@ -1,0 +1,30 @@
+[project]
+name = "zyuzyu-bot"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "DmitryBurmagin",email = "dmitryodinov@ya.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas (>=2.2.3,<3.0.0)",
+    "openpyxl (>=3.1.5,<4.0.0)",
+    "aiogram (>=3.19.0,<4.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+    "lxml (>=5.3.1,<6.0.0)",
+    "sqlalchemy (>=2.0.39,<3.0.0)",
+    "aiosqlite (>=0.21.0,<0.22.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.2.0"
+isort = "^6.0.1"
+black = "^25.1.0"
+flake8 = "^7.1.2"
+mypy = "^1.15.0"
