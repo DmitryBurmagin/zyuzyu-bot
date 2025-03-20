@@ -38,6 +38,14 @@ async def handle_file(message: types.Message):
         os.makedirs(download_folder, exist_ok=True)
 
         file_name = message.document.file_name
+        file_extension = os.path.splitext(file_name)[1].lower()
+
+        if file_extension not in [".xls", ".xlsx"]:
+            await message.answer(
+                "Отправьте документ в формате Exel (xls, xlsx)"
+            )
+            return
+
         destination_path = os.path.join(download_folder, file_name)
 
         await message.bot.download_file(
