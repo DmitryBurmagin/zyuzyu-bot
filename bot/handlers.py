@@ -1,11 +1,14 @@
 import os
 
+import pandas as pd
 from aiogram import types
 from aiogram.filters import Command
 from aiogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
+
+from .parser import parse_website
 
 
 async def cmd_start(message: types.Message):
@@ -51,11 +54,28 @@ async def handle_file(message: types.Message):
         await message.bot.download_file(
             file_path, destination=f"{destination_path}"
         )
+
+        try:
+            df = pd.read_excel(destination_path)
+
+            print(df)
+
+            for _, row in df.iterrows():
+                url = row["url"].strip()
+                xpath = row["xpath"].strip()
+                result = await parse_website(url, xpath)
+                print(f"Парсинг для {url}: {result}")
+
+            await message.answer("Данные выведены в консоль. (Тестово)")
+
+        except Exception as e:
+            await message.answer(e)
+
         await message.answer(
             f"Файл {file_name} успешно загружен в {destination_path}."
         )
     else:
-        await message.answer("Это не файл. Пожалуйста, отправьте файл.")
+        await message.answer("Это не файл. Отправьте файл.")
 
 
 async def is_upload_file(callback_query: types.CallbackQuery):
